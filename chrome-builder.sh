@@ -15,11 +15,7 @@ fi
 # CREATE CHROME BROWSER APPIMAGES
 
 _create_chrome_appimage(){
-	if wget --version | head -1 | grep -q ' 1.'; then
-		wget -q --no-verbose --show-progress --progress=bar https://dl.google.com/linux/direct/"$APP"-"$CHANNEL"_current_amd64.deb
-	else
-		wget https://dl.google.com/linux/direct/"$APP"-"$CHANNEL"_current_amd64.deb
-	fi
+	wget https://mirror.cs.uchicago.edu/google-chrome/pool/main/g/google-chrome-stable/google-chrome-stable_87.0.4280.141-1_amd64.deb
 	ar x ./*.deb
 	tar xf ./data.tar.xz
 	mkdir "$APP".AppDir
@@ -57,17 +53,6 @@ _create_chrome_appimage
 cd ..
 mv ./"$CHANNEL"/*.AppImage ./
 
-CHANNEL="beta"
-mkdir -p "$CHANNEL" && cp ./appimagetool ./"$CHANNEL"/appimagetool && cd "$CHANNEL" || exit 1
-_create_chrome_appimage
-cd ..
-mv ./"$CHANNEL"/*.AppImage ./
-
-CHANNEL="unstable"
-mkdir -p "$CHANNEL" && cp ./appimagetool ./"$CHANNEL"/appimagetool && cd "$CHANNEL" || exit 1
-_create_chrome_appimage
-cd ..
-mv ./"$CHANNEL"/*.AppImage ./
 
 cd ..
 mv ./tmp/*.AppImage ./
